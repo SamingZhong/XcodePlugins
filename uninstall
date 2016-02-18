@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "1.删除xcode插件 Alcatraz..."
+rm -rf ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin
+echo "2.清除Alcatraz插件缓存..."
+rm -rf ~/Library/Application\ Support/Alcatraz
+echo "已经清除xcode插件Alcatraz."

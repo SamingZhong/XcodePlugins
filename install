@@ -1,0 +1,36 @@
+#!/bin/sh
+
+clear
+echo "1.检查是否已经安装Alcatraz..."
+if [ ! -d ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin ]; then
+	echo "*用户:$USER 未安装Alcatraz."
+	echo "*正在安装Alcatraz..."
+	curl -fsSL https://raw.githubusercontent.com/supermarin/Alcatraz/deploy/Scripts/install.sh | sh
+	if [ $? == 0 ]; then
+		echo "**Alcatraz已安装完成!"
+	else
+		echo "**Alcatra安装失败!"
+		return -1
+	fi
+else
+	echo "*用户:$USER 已安装Alcatraz!"
+fi
+
+# 这里的-d 参数判断$myPath是否存在 
+myPath=~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/
+echo "2.检查目录:$myPath 是否存在..."
+if [ ! -d "$myPath" ]; then 
+	echo "*目录:$myPath 不存在，准备创建..."
+	mkdir "$myPath" 
+else
+	echo "*目录:$myPath 已存在，即将覆盖式拷贝。。。"
+fi 
+
+echo "3.拷贝当前目录下plugins文件夹中的所有插件到xcode插件库..."
+cp -Rf ./plugins/* ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/
+if [ $? == 0 ]; then
+	echo "*插件同步已完成，请重启Xcode!"
+else
+	echo "*插件拷贝出错！"
+fi
+exit 0
